@@ -1,0 +1,154 @@
+package SingelLinkListe;
+//create class HeroNode to storage the daten of the Heros
+public class HeroNode {
+    int no;
+    String name;
+    String nickName;
+    HeroNode next;
+    public  HeroNode(int no, String name, String nickName){
+        this.no = no;
+        this.name = name;
+        this.nickName = nickName;
+    }
+    // show the infornation of heroNode
+
+    @Override
+    public String toString() {
+        return "HeroNode{" +
+                "no=" + no +
+                ", name='" + name + '\'' +
+                ", nickName='" + nickName + '\'' +
+                '}';
+    }
+}
+
+package SingelLinkListe;
+
+import java.util.Stack;
+
+public class SingelLinkListe {
+    // create the head of the liste to show the begin of the liste.
+    private HeroNode head = new HeroNode(0, "", "");
+
+    public HeroNode getHead() {
+        return head;
+    }
+
+    // now add a new element in the ende of the liste.
+    public void add(HeroNode heroNode) {
+        //Traverse the linked list to finde the ende of the liste
+        HeroNode temp = head;
+        while (true) {
+            if (temp.next == null) { // find the ende and break;
+                break;
+            }
+            temp = temp.next; // move the temp until to find the ende of liste
+        }
+        temp.next = heroNode;
+    }
+
+    // add a element by position nummer in the special position
+    public void addByOrder(HeroNode heroNode) {
+        HeroNode temp = head;
+        boolean flag = false;
+        while (true) {
+            if (temp.next == null) {
+                break;
+            }
+            if (temp.next.no == heroNode.no) {
+                flag = true; // the position of the no is already exists
+                break;
+            }else if ( temp.next.no > heroNode.no){
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+            System.out.println("this position nummer is already exists");
+        } else {
+            heroNode.next = temp.next;
+            temp.next = heroNode;
+        }
+    }
+    // delete a element in the middele
+    public void del(HeroNode heroNode) {
+        HeroNode temp = head;
+        boolean flag = false; // mark if the elemente is found
+        while (true) {
+            if (temp.next == null) {
+                System.out.println("the liste is empty.");
+                break;
+            }
+            if (temp.next.no == heroNode.no) {
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+            temp.next = heroNode.next;
+        } else {
+            System.out.println("the element not found");
+        }
+    }
+    // update the elment
+    public void update(HeroNode heroNode){
+        HeroNode temp = head.next;
+        boolean flag = false;
+         while ( true){
+             if (temp == null){
+                 System.out.println("list is empty ");
+                 break;
+             }
+             if (temp.no == heroNode.no){
+                 flag = true ;
+                 break;
+             }
+             temp = temp.next;
+         }
+         if (flag){
+             temp.name = heroNode.name;
+             temp.nickName = heroNode.nickName;
+         }else{
+             System.out.println("nicht found");
+         }
+    }
+
+    // reverse the list
+    public void reverse (HeroNode head){
+        HeroNode temp = head.next;
+        if (temp == null){
+            System.out.println("the list is empty");
+            return;
+        }
+        // use stack
+        Stack<HeroNode> stack = new Stack<>();
+        while (temp!= null){
+            stack.push(temp);
+            temp = temp.next;
+        }
+        while (stack.size()>0){
+            System.out.println(stack.pop());
+        }
+    }
+
+    //  Traverse the liste
+    public void listShow(){
+        if (head.next == null){
+            System.out.println("the list is empty");
+            return;
+        }
+        HeroNode temp = head.next;
+        // arrive the ende of the list
+        while (temp != null) {
+            System.out.println(temp.toString());
+            temp = temp.next;
+        }
+    }
+
+
+
+
+
+
+
