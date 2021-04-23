@@ -1,0 +1,86 @@
+package DoubleLinkList;
+
+public class DoubleLinkList {
+    int no;
+   private HeroNode head = new HeroNode(0,"","");
+   public HeroNode getHead(){
+       return head;
+   }
+   // traverse list
+    public void listShow(HeroNode head){
+       if (head.next==null){
+           return;
+       }
+       HeroNode temp = head.next;
+        while (temp != null) {
+            System.out.println(temp.toString());
+            temp = temp.next;
+        }
+    }
+    
+    //add elemente in the ende of the list
+    public void add(HeroNode heroNode) {
+        //Traverse the linked list to finde the ende of the liste
+     HeroNode temp = head;
+        // find the ende and break;
+        while (temp.next != null) {
+            temp = temp.next; // move the temp until to find the ende of liste
+        }
+        temp.next = heroNode;
+        heroNode.pre = temp;
+    }
+    // insert elmente in the middle of the list
+    public void insert(HeroNode heroNode){
+       HeroNode temp = head;
+       boolean flag = false;
+       while(true){
+           if (temp.next == null){
+               break;
+           }
+           if (temp.next.no == heroNode.no){
+               flag = true;
+               System.out.println("this element is already exists ");
+               break;
+           }
+           else if (temp.next.no > heroNode.no){
+               break;
+           }
+           temp = temp.next;
+       }
+       if (flag){
+           System.out.println("this element is already exists");
+       }else{// connect at first new node with next, then new node with before
+           heroNode.next = temp.next;
+           temp.next.pre = heroNode;
+           heroNode.pre = temp;
+           temp.next = heroNode;
+       }
+    }
+
+    // delete a speical node
+    public void del(HeroNode heroNode){
+       if (head.next == null){
+           System.out.println("empty list");
+           return;
+       }
+       boolean flag = false;
+       HeroNode temp = head.next;
+       while(temp!=null){
+           if (temp.no == heroNode.no){
+               flag = true;
+               break;
+           }
+           temp = temp.next;
+       }
+       if (flag){
+           temp.pre.next = temp.next;
+           if(temp.next!=null){
+               temp.next.pre = temp.pre;
+           }
+       }else{
+           System.out.println("not found");
+       }
+    }
+
+
+}
